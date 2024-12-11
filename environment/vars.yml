@@ -1,0 +1,4 @@
+linode_label: label_name
+access_token: "{{ vault_access_token }}"
+root_password: "{{ vault_root_password }}"
+ssh_pub_key_file: /path/to/id_rsa.pub
