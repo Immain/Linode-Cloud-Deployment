@@ -136,7 +136,7 @@ sudo cat environment/vault.yml
 <b>Output:</b>
 ```
 $ANSIBLE_VAULT;1.1;AES256
-343333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
+3433[....]
 ```
 
 In your ```/environment/vars.yml``` file, reference the encrypted variables:
@@ -168,7 +168,7 @@ Creating a hashed root password is required for Linode and provides better secur
    ```
    Password: 
    Confirm: 
-   $6$TRaOi6s1u.dPLtny$isRp.ZmY9XzF5EyFCw3Dq0HMVd4D/    uz0GnA1BLLY6Z64emsgKCtbfx51aWyUGExTpzTNka8lP4cFZx93MURKP0
+   $6$T3345[....]
    ```
 4. Once this is completed, take the generated hash and add it to your ansible vault with 
 
