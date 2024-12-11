@@ -1,0 +1,69 @@
+- hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ./environment/vars.yml
+    - ./environment/vault.yml
+  tasks:
+  - name: Create a Linode instance
+    linode_v4:
+      label: "{{ linode_label }}"
+      type: g6-standard-2
+      region: us-west
+      image: linode/ubuntu22.04
+      root_pass: "{{ root_password }}"
+      private_ip: true
+      access_token: "{{ access_token }}"
+      authorized_keys: "{{ ssh_pub_key_file }}"
+      state: present
+    register: test_linode
+
+# Save Variable Name
+  - name: Save Droplet Name as Fact
+    set_fact:
+      linode: "{{ linode_label }}"
+
+  - name: Get Linode Info
+    debug:
+      msg: "ID is {{ test_linode.instance.id }} IP is {{ test_linode.instance.ipv4 }}"
+
+  - name: Add Instance ID To vars.yml
+    lineinfile:
+      dest: /home/parallels/Documents/Ansible/Linode/environment/vars.yml
+      line: "instance_id: {{ test_linode.instance.id }}"
+      state: present
+      create: yes
+
+  - name: Save IP and hostname to local hosts file /etc/hosts
+    become: yes
+    lineinfile:
+      path: /etc/hosts
+      regexp: '.*{{ linode_label }}$'
+      line: "{{ test_linode.instance.ipv4[0] }}  {{ linode_label }}" # Save IP and hostname to local hosts file /etc/hosts
+
+  - name: Add New Linode to Host Group
+    add_host:
+      hostname: "{{ linode }}"
+      ansible_host: "{{ test_linode.instance.ipv4[0] }}"
+      groups: Launched
+      ansible_user: root
+
+  - name: Wait for SSH to Come Up (this may take awhile, completion time varies)
+    wait_for:
+      host: "{{ test_linode.instance.ipv4[0] }}"
+      port: 22
+      search_regex: OpenSSH
+      timeout: 180
+
+- hosts: "{{ hostvars['localhost']['linode'] }}"
+  remote_user: root
+  vars_files:
+    - ./environment/vars.yml
+  vars:
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  tasks:
+# Ubuntu Update
+  - name: Update and upgrade apt packages
+    apt:
+      update_cache: yes
+      force_apt_get: yes
+      upgrade: dist
