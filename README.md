@@ -5,7 +5,14 @@
 
 <h3 align="center">Akamai Linode Deployment</h3>
 
+<div align="center">
 
+[![Status](https://img.shields.io/badge/status-active-success.svg)]()
+[![GitHub Issues](https://img.shields.io/github/issues/Immain/Linode-Cloud-Deployment.svg)](https://github.com/Immain/Linode-Cloud-Deployment/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/Immain/Linode-Cloud-Deployment.svg)](https://github.com/Immain/Linode-Cloud-Deployment/pulls)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
+
+</div>
 
 <p align="center">
 Linode, now part of Akamai, provides powerful and reliable cloud hosting solutions. With a range of virtual private servers, Linode offers scalable compute platforms with additional storage, security, and monitoring features. 
