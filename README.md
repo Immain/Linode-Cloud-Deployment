@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=200px src="https://assets.linode.com/akamai-logo.svg" alt="Project logo"></a>
+ <img width=200px height=200px src="https://seeklogo.com/images/L/linode-logo-0B22204438-seeklogo.com.png" alt="Linode Akamai Logo"></a>
 </p>
 
 <h3 align="center">Akamai Linode Deployment</h3>
@@ -21,6 +21,38 @@ For this project, we will be deploying a Linode through Akamai using Ansible. Th
 - Familiarity with the Command Line Interface
 - Ansible for Linux, macOS, or WSL
 
+## Install the Linode CLI
+The Linode CLI is officially managed through pip, the package installer for Python. Ensure that Python 3 and pip3 are both installed. If not, follow the instructions within the Install Python 3 and pip3 section.
+
+If you have the Linode CLI installed, you can list the available image and plan types using the commands:
+```
+linode-cli images list
+linode-cli linodes types
+```
+----
+<br />
+
+1. Verify that you have Python installed
+   ```
+   python3 --version
+   pip3 --version
+   ```
+2. To install or upgrade the Linode CLI, run the following command:
+
+   ```
+   pip3 install linode-cli --upgrade
+   ```
+
+3. Install the boto library if you intend to interact with the Object Storage service.
+
+   ```
+   pip3 install boto3
+   ```
+4. To confirm that the Linode CLI has been successfully installed, run the help command.
+
+   ```
+   linode-cli --help
+   ```
 
 
 ## Generate SSH Key and Personal Access Token:
@@ -142,4 +174,6 @@ To run your playbook use
 ```
 sudo ansible-playbook deploy.yml --ask-vault-pass
 ```
+
+
 
