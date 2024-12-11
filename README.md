@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=200px src="https://cdn.worldvectorlogo.com/logos/linode-1.svg" alt="Linode Akamai Logo"></a>
+ <img width=200px height=200px src="https://seeklogo.com/images/L/linode-logo-0B22204438-seeklogo.com.png" alt="Project logo"></a>
 </p>
 
 <h3 align="center">Akamai Linode Deployment</h3>
@@ -37,7 +37,6 @@ linode-cli images list
 linode-cli linodes types
 ```
 ----
-<br />
 
 1. Verify that you have Python installed
    ```
@@ -126,7 +125,7 @@ New Vault password:
 Confirm New Vault password:
 ```
 
-Add your ```oauth_token``` to the vault using a ```vault_``` prefix
+Add your ```access_token``` to the vault using a ```vault_``` prefix
 ```
 vault_oauth_token: superdupersecrettoken
 ```
@@ -140,17 +139,17 @@ $ANSIBLE_VAULT;1.1;AES256
 343333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
 ```
 
-In your ```/group_vars/vars.yml``` file, reference the encrypted variables:
+In your ```/environment/vars.yml``` file, reference the encrypted variables:
 ```
-oauth_token: "{{ vault_oauth_token }}"
+access_token: "{{ vault_access_token }}"
 ```
 
 Reference the vault under ```vars_files``` in your playbook, include both the vars.yml and vault.yml files:
 ```
 - hosts: localhost
   vars_files:
-    - ./group_vars/vars.yml
-    - ./group_vars/vault.yml
+    - ./environment/vars.yml
+    - ./environment/vault.yml
 ```
 ## Generating a Hashed Password:
 Creating a hashed root password is required for Linode and provides better security rather than having your passwords in plain text
@@ -161,26 +160,29 @@ Creating a hashed root password is required for Linode and provides better secur
    sudo apt install python3
    ```
 2. Crypt provides access to the Unix crypt() function, which is used to hash passwords.
-  ```
-  python3 -c 'import crypt,getpass;pw=getpass.getpass();print(crypt.crypt (pw) if (pw==getpass.getpass("Confirm: ")) else exit())'
-  ```
-**It will immediately ask you to type in a password and then confirm it (Like The Example Below)**
-  ```
-  Password: 
-  Confirm: 
-  $6$TRaOi6s1u.dPLtny$isRp.ZmY9XzF5EyFCw3Dq0HMVd4D/   uz0GnA1BLLY6Z64emsgKCtbfx51aWyUGExTpzTNka8lP4cFZx93MURKP0
-  ```
-3. Once this is completed, take the generated hash and add it to your ansible vault with 
+   ```
+   python3 -c 'import crypt,getpass;pw=getpass.getpass();print(crypt. crypt (pw) if (pw==getpass.getpass("Confirm: ")) else exit())'
+   ```
+
+3. Confirm your password
+   ```
+   Password: 
+   Confirm: 
+   $6$TRaOi6s1u.dPLtny$isRp.ZmY9XzF5EyFCw3Dq0HMVd4D/    uz0GnA1BLLY6Z64emsgKCtbfx51aWyUGExTpzTNka8lP4cFZx93MURKP0
+   ```
+4. Once this is completed, take the generated hash and add it to your ansible vault with 
 
    ```
    ansible-vault edit vault.yml
    ```
+   ```
+   root_password: hashed-password
+   ```
+
 
 ## Run the playbook
 To run your playbook use
 ```
 sudo ansible-playbook deploy.yml --ask-vault-pass
 ```
-
-
 
