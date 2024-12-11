@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=200px src="https://seeklogo.com/images/L/linode-logo-0B22204438-seeklogo.com.png" alt="Project logo"></a>
+ <img width=200px height=200px src="https://cdn.freebiesupply.com/logos/large/2x/linode-1-logo-png-transparent.png" alt="Project logo"></a>
 </p>
 
 <h3 align="center">Akamai Linode Deployment</h3>
